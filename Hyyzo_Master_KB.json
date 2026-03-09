@@ -7,7 +7,7 @@
     "business_model": "Performance-driven model where brands pay only for actual conversions, sales, or customer acquisitions."
   },
   "vision_mission": {
-    "vision": "To become India’s most trusted performance-driven loyalty and rewards platform.",
+    "vision": "To become India\u2019s most trusted performance-driven loyalty and rewards platform.",
     "mission": "Help brands acquire and retain high-intent online shoppers through measurable performance-based cashback and rewards."
   },
   "founders": [
@@ -69,19 +69,19 @@
   "journey": [
     {
       "year": 2022,
-      "milestone": "Platform launched and generated more than ₹5 lakh cashback for users."
+      "milestone": "Platform launched and generated more than \u20b95 lakh cashback for users."
     },
     {
       "year": 2023,
-      "milestone": "Crossed 1 lakh users and distributed over ₹1 crore cashback."
+      "milestone": "Crossed 1 lakh users and distributed over \u20b91 crore cashback."
     },
     {
       "year": 2024,
-      "milestone": "Launched official mobile app and distributed ₹2.5 crore cashback."
+      "milestone": "Launched official mobile app and distributed \u20b92.5 crore cashback."
     },
     {
       "year": 2025,
-      "milestone": "Reached 100K Play Store installs and distributed nearly ₹4 crore cashback."
+      "milestone": "Reached 100K Play Store installs and distributed nearly \u20b94 crore cashback."
     }
   ],
   "extension_features": {
@@ -183,6 +183,13 @@
     {
       "question": "When will my cashback be approved?",
       "answer": "Cashback approval depends on retailer confirmation and return period policies."
+    }
+  ],
+  "learned_responses": [
+    {
+      "question": "how to change my number",
+      "correct_answer": "\ud83d\udc4b To change your registered phone number, email **support@hyyzo.com** from your registered email, including both your old and new numbers. \ud83d\ude80",
+      "added_by_team": true
     }
   ]
 }
