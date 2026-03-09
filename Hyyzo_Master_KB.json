@@ -1,0 +1,188 @@
+{
+  "platform_overview": {
+    "name": "Hyyzo",
+    "founded_year": 2022,
+    "description": "Hyyzo is a cashback and rewards platform that allows users to earn real money while shopping online from 200+ partner stores.",
+    "value_proposition": "Users shop normally from partner stores and receive cashback that can later be transferred to their bank account.",
+    "business_model": "Performance-driven model where brands pay only for actual conversions, sales, or customer acquisitions."
+  },
+  "vision_mission": {
+    "vision": "To become India’s most trusted performance-driven loyalty and rewards platform.",
+    "mission": "Help brands acquire and retain high-intent online shoppers through measurable performance-based cashback and rewards."
+  },
+  "founders": [
+    {
+      "name": "Ashutosh Goyal",
+      "role": "CEO",
+      "background": "IIT Kharagpur alumnus, previously worked at American Express.",
+      "focus": "Building transparent cashback solutions that benefit both users and brands."
+    },
+    {
+      "name": "Nandita Jain",
+      "role": "Co-Founder",
+      "background": "Former banker in the Philippines and senior developer at Wipro.",
+      "focus": "Marketing, brand expansion, and user engagement."
+    }
+  ],
+  "platform_features": {
+    "shop_and_earn": "Users shop through Hyyzo partner stores and earn cashback once the order is confirmed.",
+    "profit_link": "Users can generate a shareable link for a product and earn rewards when others purchase through it.",
+    "referral_program": "Users can invite friends and earn 10% of their cashback earnings.",
+    "go_link": "Allows quick redirection to partner stores without manually creating links."
+  },
+  "how_hyyzo_works": [
+    "Download the Hyyzo app.",
+    "Sign up or log in.",
+    "Search for a partner store.",
+    "Click on 'Earn Cashback'.",
+    "Complete purchase on the store website.",
+    "Cashback is tracked in Hyyzo wallet.",
+    "Withdraw cashback after confirmation."
+  ],
+  "earning_methods": [
+    {
+      "method": "Shop & Earn Cashback",
+      "description": "Users shop normally through partner stores and receive cashback after order confirmation."
+    },
+    {
+      "method": "Profit Link",
+      "description": "Users generate a link for any product and earn commission when others purchase through that link."
+    },
+    {
+      "method": "Refer & Earn",
+      "description": "Users share referral link and earn 10% of the cashback earned by their referrals."
+    }
+  ],
+  "categories_available": [
+    "Fashion & Accessories",
+    "Health & Medical",
+    "Food & Dining",
+    "Beauty & Grooming",
+    "Mobile & Electronics",
+    "Travel",
+    "Entertainment",
+    "Home Appliances & Grocery",
+    "Education",
+    "Hosting Websites",
+    "Software"
+  ],
+  "journey": [
+    {
+      "year": 2022,
+      "milestone": "Platform launched and generated more than ₹5 lakh cashback for users."
+    },
+    {
+      "year": 2023,
+      "milestone": "Crossed 1 lakh users and distributed over ₹1 crore cashback."
+    },
+    {
+      "year": 2024,
+      "milestone": "Launched official mobile app and distributed ₹2.5 crore cashback."
+    },
+    {
+      "year": 2025,
+      "milestone": "Reached 100K Play Store installs and distributed nearly ₹4 crore cashback."
+    }
+  ],
+  "extension_features": {
+    "purpose": "Allows users to activate cashback while browsing partner websites.",
+    "steps": [
+      "Install Hyyzo browser extension.",
+      "Visit partner store website.",
+      "Click 'Activate Cashback'.",
+      "Shop normally.",
+      "Cashback is tracked once order is confirmed."
+    ]
+  },
+  "profit_link_faq": [
+    {
+      "question": "How do I create a profit link?",
+      "answer": "Paste the product URL into Hyyzo and click 'Create Profit Link'."
+    },
+    {
+      "question": "Is there any earning limit?",
+      "answer": "No, there is no limit on earnings through profit links."
+    },
+    {
+      "question": "Where can I share profit links?",
+      "answer": "You can share them via WhatsApp, Telegram, Instagram, SMS, or other social media."
+    }
+  ],
+  "go_link_faq": [
+    {
+      "question": "How do I access a store using Go Link?",
+      "answer": "Type the Hyyzo Go URL followed by your store name."
+    },
+    {
+      "question": "Do I need a username?",
+      "answer": "Yes, a unique username is required to use Go Link."
+    },
+    {
+      "question": "How can I remember my Go URL?",
+      "answer": "Bookmark it or save it in your notes."
+    }
+  ],
+  "referral_faq": [
+    {
+      "question": "How do I invite friends?",
+      "answer": "Share your referral link via WhatsApp, Telegram, Facebook, or other platforms."
+    },
+    {
+      "question": "Does my friend need to shop through the referral link?",
+      "answer": "Yes, purchases must happen through the referral link for rewards."
+    },
+    {
+      "question": "Can I withdraw referral earnings?",
+      "answer": "Yes, referral earnings can be withdrawn to your bank account."
+    }
+  ],
+  "wallet_status": {
+    "pending": "Cashback is waiting for retailer confirmation.",
+    "approved": "Cashback confirmed and available for withdrawal."
+  },
+  "widgets": {
+    "store_widget": {
+      "default": "Shows top 4 trending stores.",
+      "customization": "Users can edit and select their favorite stores."
+    },
+    "profit_link_widget": {
+      "purpose": "Allows users to quickly convert product URLs into profit links directly from home screen."
+    }
+  },
+  "cashback_activation_states": [
+    {
+      "state": "default_icon",
+      "description": "Profit link not activated yet."
+    },
+    {
+      "state": "activation_failed",
+      "description": "Activation failed due to internet or technical issue."
+    },
+    {
+      "state": "cashback_activated",
+      "description": "Cashback tracking successfully activated."
+    },
+    {
+      "state": "verified",
+      "description": "Green check mark confirms active tracking."
+    }
+  ],
+  "support_faq": [
+    {
+      "question": "How can I change my registered phone number?",
+      "answer": "Email redeem@hyyzo.com from your registered email with old and new number."
+    },
+    {
+      "question": "How do I upload my PAN card?",
+      "answer": "Go to Hyyzo website, click 'Redeem Cashback', and upload PAN card in the popup."
+    },
+    {
+      "question": "Where can I see my monthly earnings?",
+      "answer": "You can view earnings in the Wallet section of the Hyyzo app."
+    },
+    {
+      "question": "When will my cashback be approved?",
+      "answer": "Cashback approval depends on retailer confirmation and return period policies."
+    }
+  ]
+}
