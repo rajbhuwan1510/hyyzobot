@@ -33,9 +33,31 @@ def load_kb():
     except Exception:
         return None
 
+def load_chat_history():
+    try:
+        if os.path.exists("chat_history.json"):
+            with open("chat_history.json", "r", encoding="utf-8") as f:
+                return json.load(f)
+    except Exception:
+        pass
+    return []
+
+def save_chat_history(messages):
+    try:
+        # We don't need to save the feedback UI state to permanent history
+        clean_messages = [{"role": m["role"], "content": m["content"]} for m in messages]
+        with open("chat_history.json", "w", encoding="utf-8") as f:
+            json.dump(clean_messages, f, indent=2)
+    except Exception as e:
+        print(f"Error saving history: {e}")
+
 # Initialize session state for chat history
 if "messages" not in st.session_state:
-    st.session_state.messages = []
+    st.session_state.messages = load_chat_history()
+
+# Save history callback wrapper
+def sync_history():
+    save_chat_history(st.session_state.messages)
 
 # Initialize Gemini Client
 api_key = os.getenv("GEMINI_API_KEY")
@@ -89,7 +111,9 @@ for message in st.session_state.messages:
 # User Input
 if prompt := st.chat_input("How can I help you today?"):
     # Clear previous thought and display user message
-    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.session_state.messages.append({"role": "user", "content": prompt, "id": len(st.session_state.messages), "feedback": None})
+    sync_history()
+    
     with st.chat_message("user"):
         st.markdown(prompt)
 
@@ -125,8 +149,70 @@ if prompt := st.chat_input("How can I help you today?"):
             
             response_placeholder.markdown(full_response)
             
-            # Save assistant message
-            st.session_state.messages.append({"role": "assistant", "content": full_response})
+            # Save assistant message with unique ID for feedback tracking
+            msg_id = len(st.session_state.messages)
+            st.session_state.messages.append({
+                "role": "assistant", 
+                "content": full_response,
+                "id": msg_id,
+                "feedback": None
+            })
+            sync_history()
+
+            # Force a rerun to show feedback buttons immediately
+            st.rerun()
 
         except Exception as e:
             st.error(f"Error: {e}")
+
+# Process feedback and display "Edit" options
+for i, msg in enumerate(st.session_state.messages):
+    if msg["role"] == "assistant":
+        # Feedback mechanism
+        feedback_key = f"feedback_{msg.get('id', i)}"
+        
+        # Determine current feedback state
+        current_feedback = msg.get("feedback")
+        
+        def handle_feedback(idx=i, key=feedback_key):
+            # Streamlit feedback returns 1 for thumbs up, 0 for thumbs down
+            fb_val = st.session_state[key]
+            st.session_state.messages[idx]["feedback"] = fb_val
+
+        if current_feedback is None:
+            st.feedback("thumbs", key=feedback_key, on_change=handle_feedback)
+        elif current_feedback == 1:
+            st.success("👍 Thanks for the positive feedback!")
+        elif current_feedback == 0:
+            st.warning("👎 Thanks for the feedback. How should I have answered?")
+            
+            # --- Edit & Learn Feature ---
+            with st.form(key=f"edit_form_{msg.get('id', i)}"):
+                # Find the user question that prompted this answer
+                question = ""
+                if i > 0 and st.session_state.messages[i-1]["role"] == "user":
+                    question = st.session_state.messages[i-1]["content"]
+                
+                st.write(f"**Question:** {question}")
+                corrected_answer = st.text_area("Provide the Correct Answer to save to Knowledge Base:", value=msg["content"])
+                
+                if st.form_submit_button("Save to Knowledge Base"):
+                    # Append new knowledge to JSON
+                    kb_data = load_kb()
+                    if kb_data:
+                        if "learned_responses" not in kb_data:
+                            kb_data["learned_responses"] = []
+                        
+                        kb_data["learned_responses"].append({
+                            "question": question,
+                            "correct_answer": corrected_answer,
+                            "added_by_team": True
+                        })
+                        
+                        # Save back to file
+                        with open("Hyyzo_Master_KB.json", "w", encoding="utf-8") as f:
+                            json.dump(kb_data, f, indent=2)
+                        
+                        st.success("✅ New knowledge saved successfully! The bot will use this answer next time.")
+                        st.session_state.messages[i]["feedback"] = 2 # Mark as resolved to close form
+                        st.rerun()
