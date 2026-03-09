@@ -90,11 +90,48 @@ def get_groq_client():
 
 client = get_groq_client()
 
-# Display visible chat history (current session only)
-for message in st.session_state.messages:
+# Display visible chat history with inline feedback
+for i, message in enumerate(st.session_state.messages):
     if not message.get("hidden", False):
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
+
+        # Inline feedback — only for assistant messages
+        if message["role"] == "assistant":
+            feedback_key = f"feedback_{message.get('id', i)}"
+            current_feedback = message.get("feedback")
+
+            def handle_feedback(idx=i, key=feedback_key):
+                fb_val = st.session_state[key]
+                st.session_state.messages[idx]["feedback"] = fb_val
+
+            if current_feedback is None:
+                st.feedback("thumbs", key=feedback_key, on_change=handle_feedback)
+            elif current_feedback == 1:
+                st.success("👍 Thanks for the positive feedback!")
+            elif current_feedback == 0:
+                st.warning("👎 Thanks for the feedback. How should I have answered?")
+                with st.form(key=f"edit_form_{message.get('id', i)}"):
+                    question = ""
+                    if i > 0 and st.session_state.messages[i-1]["role"] == "user":
+                        question = st.session_state.messages[i-1]["content"]
+                    st.write(f"**Question:** {question}")
+                    corrected_answer = st.text_area("Provide the Correct Answer:", value=message["content"])
+                    if st.form_submit_button("💾 Save to Knowledge Base"):
+                        kb_data = load_kb()
+                        if kb_data:
+                            if "learned_responses" not in kb_data:
+                                kb_data["learned_responses"] = []
+                            kb_data["learned_responses"].append({
+                                "question": question,
+                                "correct_answer": corrected_answer,
+                                "added_by_team": True
+                            })
+                            with open("Hyyzo_Master_KB.json", "w", encoding="utf-8") as f:
+                                json.dump(kb_data, f, indent=2)
+                            st.success("✅ Saved! The bot will use this answer next time.")
+                            st.session_state.messages[i]["feedback"] = 2
+                            st.rerun()
 
 # User Input
 if prompt := st.chat_input("How can I help you today?"):
@@ -152,46 +189,3 @@ if prompt := st.chat_input("How can I help you today?"):
         except Exception as e:
             st.error(f"Error: {e}")
 
-# Feedback and Edit section (only for visible messages)
-for i, msg in enumerate(st.session_state.messages):
-    if msg["role"] == "assistant" and not msg.get("hidden", False):
-        feedback_key = f"feedback_{msg.get('id', i)}"
-        current_feedback = msg.get("feedback")
-
-        def handle_feedback(idx=i, key=feedback_key):
-            fb_val = st.session_state[key]
-            st.session_state.messages[idx]["feedback"] = fb_val
-
-        if current_feedback is None:
-            st.feedback("thumbs", key=feedback_key, on_change=handle_feedback)
-        elif current_feedback == 1:
-            st.success("👍 Thanks for the positive feedback!")
-        elif current_feedback == 0:
-            st.warning("👎 Thanks for the feedback. How should I have answered?")
-
-            with st.form(key=f"edit_form_{msg.get('id', i)}"):
-                question = ""
-                if i > 0 and st.session_state.messages[i-1]["role"] == "user":
-                    question = st.session_state.messages[i-1]["content"]
-
-                st.write(f"**Question:** {question}")
-                corrected_answer = st.text_area("Provide the Correct Answer:", value=msg["content"])
-
-                if st.form_submit_button("💾 Save to Knowledge Base"):
-                    kb_data = load_kb()
-                    if kb_data:
-                        if "learned_responses" not in kb_data:
-                            kb_data["learned_responses"] = []
-
-                        kb_data["learned_responses"].append({
-                            "question": question,
-                            "correct_answer": corrected_answer,
-                            "added_by_team": True
-                        })
-
-                        with open("Hyyzo_Master_KB.json", "w", encoding="utf-8") as f:
-                            json.dump(kb_data, f, indent=2)
-
-                        st.success("✅ Saved! The bot will use this answer next time.")
-                        st.session_state.messages[i]["feedback"] = 2
-                        st.rerun()
