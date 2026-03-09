@@ -37,7 +37,10 @@ def load_chat_history():
     try:
         if os.path.exists("chat_history.json"):
             with open("chat_history.json", "r", encoding="utf-8") as f:
-                return json.load(f)
+                history = json.load(f)
+                for msg in history:
+                    msg["hidden"] = True
+                return history
     except Exception:
         pass
     return []
@@ -84,11 +87,12 @@ Your goal is to help users and team members with quick, human-like answers based
 {kb_string}
 
 ### INSTRUCTIONS:
-1. BE CONCISE: Use short sentences. One paragraph max unless steps are needed.
-2. BE HUMAN: Use friendly emojis like 👋, 💎, 🚀. Speak like a teammate.
-3. PRIORITIZE KB: Use the official data provided.
-4. SPEED: Get to the point quickly.
-5. HONESTY: If it's not in the KB, give a helpful guess but clarify it's not official info.
+1. CRITICAL - OVERRIDES: If the user's question matches or is very similar to a question in the `learned_responses` array of the Knowledge Base, you MUST use the EXACT `correct_answer` provided there. These are human-verified corrections and take absolute priority.
+2. BE CONCISE: Use short sentences. One paragraph max unless steps are needed.
+3. BE HUMAN: Use friendly emojis like 👋, 💎, 🚀. Speak like a teammate.
+4. PRIORITIZE KB: Use the official data provided.
+5. SPEED: Get to the point quickly.
+6. HONESTY: If it's not in the KB, give a helpful guess but clarify it's not official info.
 """
 
 @st.cache_resource
@@ -105,8 +109,9 @@ client = get_chat_client()
 
 # Display chat history
 for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+    if not message.get("hidden", False):
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
 
 # User Input
 if prompt := st.chat_input("How can I help you today?"):
@@ -167,7 +172,7 @@ if prompt := st.chat_input("How can I help you today?"):
 
 # Process feedback and display "Edit" options
 for i, msg in enumerate(st.session_state.messages):
-    if msg["role"] == "assistant":
+    if msg["role"] == "assistant" and not msg.get("hidden", False):
         # Feedback mechanism
         feedback_key = f"feedback_{msg.get('id', i)}"
         
