@@ -1,195 +1,138 @@
 {
-  "platform_overview": {
-    "name": "Hyyzo",
-    "founded_year": 2022,
-    "description": "Hyyzo is a cashback and rewards platform that allows users to earn real money while shopping online from 200+ partner stores.",
-    "value_proposition": "Users shop normally from partner stores and receive cashback that can later be transferred to their bank account.",
-    "business_model": "Performance-driven model where brands pay only for actual conversions, sales, or customer acquisitions."
-  },
-  "vision_mission": {
-    "vision": "To become India\u2019s most trusted performance-driven loyalty and rewards platform.",
-    "mission": "Help brands acquire and retain high-intent online shoppers through measurable performance-based cashback and rewards."
-  },
-  "founders": [
+  "kb_name": "Hyzify Knowledge Base",
+  "version": "1.0",
+  "modules": [
     {
-      "name": "Ashutosh Goyal",
-      "role": "CEO",
-      "background": "IIT Kharagpur alumnus, previously worked at American Express.",
-      "focus": "Building transparent cashback solutions that benefit both users and brands."
+      "module": "dashboard",
+      "intent": "dashboard_info",
+      "url": "https://hyzify.in/",
+      "description": "Dashboard shows overall user performance and activity.",
+      "data_points": [
+        "Number of links converted",
+        "Total channels added",
+        "Total earnings",
+        "Help video available"
+      ],
+      "images": [
+        {
+          "type": "ui_screenshot",
+          "description": "Dashboard screen showing links converted, channels and earnings",
+          "path": "/images/Dashboard.png"
+        }
+      ]
     },
     {
-      "name": "Nandita Jain",
-      "role": "Co-Founder",
-      "background": "Former banker in the Philippines and senior developer at Wipro.",
-      "focus": "Marketing, brand expansion, and user engagement."
-    }
-  ],
-  "platform_features": {
-    "shop_and_earn": "Users shop through Hyyzo partner stores and earn cashback once the order is confirmed.",
-    "profit_link": "Users can generate a shareable link for a product and earn rewards when others purchase through it.",
-    "referral_program": "Users can invite friends and earn 10% of their cashback earnings.",
-    "go_link": "Allows quick redirection to partner stores without manually creating links."
-  },
-  "how_hyyzo_works": [
-    "Download the Hyyzo app.",
-    "Sign up or log in.",
-    "Search for a partner store.",
-    "Click on 'Earn Cashback'.",
-    "Complete purchase on the store website.",
-    "Cashback is tracked in Hyyzo wallet.",
-    "Withdraw cashback after confirmation."
-  ],
-  "earning_methods": [
-    {
-      "method": "Shop & Earn Cashback",
-      "description": "Users shop normally through partner stores and receive cashback after order confirmation."
+      "module": "profile",
+      "intent": "profile_setup",
+      "url": "https://hyzify.in/profile",
+      "description": "Profile section to manage affiliate tags and account details.",
+      "features": [
+        "Add Amazon affiliate tag",
+        "Request Flipkart and Shopsy tag via support"
+      ],
+      "support_contact": {
+        "whatsapp": "+91 91165 72332"
+      },
+      "images": [
+        {
+          "type": "ui_screenshot",
+          "description": "Profile page where affiliate tags can be added",
+          "path": "/images/Profile.png"
+        }
+      ]
     },
     {
-      "method": "Profit Link",
-      "description": "Users generate a link for any product and earn commission when others purchase through that link."
+      "module": "converter",
+      "intent": "link_conversion",
+      "url": "https://hyzify.in/converter",
+      "description": "Convert product links into profit links.",
+      "capabilities": [
+        "Convert active store links",
+        "Acts as link shortener"
+      ],
+      "workflow": [
+        "Paste product link",
+        "Click convert",
+        "Get profit link instantly"
+      ]
     },
     {
-      "method": "Refer & Earn",
-      "description": "Users share referral link and earn 10% of the cashback earned by their referrals."
-    }
-  ],
-  "categories_available": [
-    "Fashion & Accessories",
-    "Health & Medical",
-    "Food & Dining",
-    "Beauty & Grooming",
-    "Mobile & Electronics",
-    "Travel",
-    "Entertainment",
-    "Home Appliances & Grocery",
-    "Education",
-    "Hosting Websites",
-    "Software"
-  ],
-  "journey": [
-    {
-      "year": 2022,
-      "milestone": "Platform launched and generated more than \u20b95 lakh cashback for users."
+      "module": "converter_bots",
+      "intent": "telegram_bot_conversion",
+      "url": "https://hyzify.in/converter_bots",
+      "description": "Telegram bots used to convert links into profit links.",
+      "bots": [
+        "@hyyzo_link_bot",
+        "@hyyzo_link_1_bot",
+        "@hyyzo_link_2_bot",
+        "@hyyzo_link_3_bot",
+        "@hyyzo_link_4_bot",
+        "@hyyzo_link_5_bot"
+      ],
+      "workflow": [
+        "Open Telegram",
+        "Search any Hyyzo converter bot",
+        "Login using Hyyzo registered phone number",
+        "Paste product link",
+        "Get converted link instantly",
+        "Supports bulk link conversion"
+      ]
     },
     {
-      "year": 2023,
-      "milestone": "Crossed 1 lakh users and distributed over \u20b91 crore cashback."
+      "module": "telegram_integration",
+      "intent": "telegram_setup",
+      "url": "https://hyzify.in/telegram",
+      "description": "Setup Telegram channel for automated deal posting.",
+      "setup_steps": [
+        "Click on Add Telegram",
+        "Make @hyyzo_deal_posting_bot admin of your channel",
+        "Enter channel username (starts with @) or ID (starts with -100)",
+        "Select converter bot",
+        "Save settings"
+      ],
+      "bot_links": {
+        "deal_posting_bot": "https://t.me/hyyzo_deal_posting_bot",
+        "chat_info_bot": "https://t.me/MyChatInfoBot"
+      },
+      "channel_id_process": [
+        "Open @mychatinfobot on Telegram",
+        "Forward any message to the bot",
+        "Copy the channel ID received"
+      ],
+      "auto_forwarding": [
+        "Enable auto forwarding option",
+        "Enter source channel ID",
+        "Save settings"
+      ]
     },
     {
-      "year": 2024,
-      "milestone": "Launched official mobile app and distributed \u20b92.5 crore cashback."
+      "module": "reports",
+      "intent": "reports_usage",
+      "url": "https://hyzify.in/reports",
+      "description": "View and analyze all tracking reports.",
+      "features": [
+        "View all reports",
+        "Apply filters",
+        "Analyze performance data"
+      ]
     },
     {
-      "year": 2025,
-      "milestone": "Reached 100K Play Store installs and distributed nearly \u20b94 crore cashback."
-    }
-  ],
-  "extension_features": {
-    "purpose": "Allows users to activate cashback while browsing partner websites.",
-    "steps": [
-      "Install Hyyzo browser extension.",
-      "Visit partner store website.",
-      "Click 'Activate Cashback'.",
-      "Shop normally.",
-      "Cashback is tracked once order is confirmed."
-    ]
-  },
-  "profit_link_faq": [
-    {
-      "question": "How do I create a profit link?",
-      "answer": "Paste the product URL into Hyyzo and click 'Create Profit Link'."
+      "module": "replacer",
+      "intent": "text_replacement",
+      "url": "https://hyzify.in/replacer",
+      "description": "Replace specific text in Telegram deal posts."
     },
     {
-      "question": "Is there any earning limit?",
-      "answer": "No, there is no limit on earnings through profit links."
-    },
-    {
-      "question": "Where can I share profit links?",
-      "answer": "You can share them via WhatsApp, Telegram, Instagram, SMS, or other social media."
-    }
-  ],
-  "go_link_faq": [
-    {
-      "question": "How do I access a store using Go Link?",
-      "answer": "Type the Hyyzo Go URL followed by your store name."
-    },
-    {
-      "question": "Do I need a username?",
-      "answer": "Yes, a unique username is required to use Go Link."
-    },
-    {
-      "question": "How can I remember my Go URL?",
-      "answer": "Bookmark it or save it in your notes."
-    }
-  ],
-  "referral_faq": [
-    {
-      "question": "How do I invite friends?",
-      "answer": "Share your referral link via WhatsApp, Telegram, Facebook, or other platforms."
-    },
-    {
-      "question": "Does my friend need to shop through the referral link?",
-      "answer": "Yes, purchases must happen through the referral link for rewards."
-    },
-    {
-      "question": "Can I withdraw referral earnings?",
-      "answer": "Yes, referral earnings can be withdrawn to your bank account."
-    }
-  ],
-  "wallet_status": {
-    "pending": "Cashback is waiting for retailer confirmation.",
-    "approved": "Cashback confirmed and available for withdrawal."
-  },
-  "widgets": {
-    "store_widget": {
-      "default": "Shows top 4 trending stores.",
-      "customization": "Users can edit and select their favorite stores."
-    },
-    "profit_link_widget": {
-      "purpose": "Allows users to quickly convert product URLs into profit links directly from home screen."
-    }
-  },
-  "cashback_activation_states": [
-    {
-      "state": "default_icon",
-      "description": "Profit link not activated yet."
-    },
-    {
-      "state": "activation_failed",
-      "description": "Activation failed due to internet or technical issue."
-    },
-    {
-      "state": "cashback_activated",
-      "description": "Cashback tracking successfully activated."
-    },
-    {
-      "state": "verified",
-      "description": "Green check mark confirms active tracking."
-    }
-  ],
-  "support_faq": [
-    {
-      "question": "How can I change my registered phone number?",
-      "answer": "Email redeem@hyyzo.com from your registered email with old and new number."
-    },
-    {
-      "question": "How do I upload my PAN card?",
-      "answer": "Go to Hyyzo website, click 'Redeem Cashback', and upload PAN card in the popup."
-    },
-    {
-      "question": "Where can I see my monthly earnings?",
-      "answer": "You can view earnings in the Wallet section of the Hyyzo app."
-    },
-    {
-      "question": "When will my cashback be approved?",
-      "answer": "Cashback approval depends on retailer confirmation and return period policies."
-    }
-  ],
-  "learned_responses": [
-    {
-      "question": "how to change my number",
-      "correct_answer": "\ud83d\udc4b To change your registered phone number, email **support@hyyzo.com** from your registered email, including both your old and new numbers. \ud83d\ude80",
-      "added_by_team": true
+      "module": "settings",
+      "intent": "settings_management",
+      "url": "https://hyzify.in/settings",
+      "description": "Manage posting settings and customization.",
+      "features": [
+        "Add or remove header/footer",
+        "Stop image forwarding",
+        "Block specific text",
+        "Set timer to avoid duplicate deals"
+      ]
     }
   ]
 }
