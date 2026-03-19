@@ -17,7 +17,7 @@
         {
           "type": "ui_screenshot",
           "description": "Dashboard screen showing links converted, channels and earnings",
-          "path": "/images/Dashboard.png"
+          "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Dashboard.png"
         }
       ]
     },
@@ -37,7 +37,7 @@
         {
           "type": "ui_screenshot",
           "description": "Profile page where affiliate tags can be added",
-          "path": "/images/Profile.png"
+          "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Profile.png"
         }
       ]
     },
