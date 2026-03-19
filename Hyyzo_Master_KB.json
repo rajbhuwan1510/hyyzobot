@@ -145,6 +145,51 @@
       "question": "show me the profile page",
       "correct_answer": "Here is how your Profile page appears! 👤\n\n![Profile](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Profile.png)",
       "added_by_team": true
+    },
+    {
+      "question": "how does the converter look",
+      "correct_answer": "Here is the Converter layout! 🔗\n\n![Converter](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Converter.png)",
+      "added_by_team": true
+    },
+    {
+      "question": "show me the telegram bots",
+      "correct_answer": "These are the Telegram Converter Bots you can use! 🤖\n\n![Bots](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Bots.png)",
+      "added_by_team": true
+    },
+    {
+      "question": "show me the reports page",
+      "correct_answer": "Here is what the Reports page looks like! 📈\n\n![Reports](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Reports.png)",
+      "added_by_team": true
+    },
+    {
+      "question": "how does the replacer work",
+      "correct_answer": "Here's a look at the Replacer feature! 🔄\n\n![Replacer](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Replacer.png)",
+      "added_by_team": true
+    },
+    {
+      "question": "how to set up telegram auto forwarding",
+      "correct_answer": "Here are the steps to set up auto-forwarding on Telegram! 🔁\n\n![Autoforwarding](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Autoforwarding.png)",
+      "added_by_team": true
+    },
+    {
+      "question": "how to get telegram channel id",
+      "correct_answer": "To get your Telegram Channel ID, you can follow these screenshots! 🆔\n\nStep 1:\n![Step 1](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Get%20Channel%20Id%201.jpg)\n\nStep 2:\n![Step 2](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Get%20Channel%20Id%202.jpg)\n\nStep 3:\n![Step 3](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Get%20Channel%20Id%203.jpg)",
+      "added_by_team": true
+    },
+    {
+      "question": "show me settings page",
+      "correct_answer": "Here are the different sections of the Settings page! ⚙️\n\nPart 1:\n![Settings 1](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Settings%201.png)\n\nPart 2:\n![Settings 2](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Settings%202.png)\n\nPart 3:\n![Settings 3](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Settings%203.png)",
+      "added_by_team": true
+    },
+    {
+      "question": "how to connect telegram",
+      "correct_answer": "Here is how you connect your Telegram channel! 📱\n\n![Telegram 1](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Telegram%201.png)\n\n![Telegram 2](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Telegram%202.png)",
+      "added_by_team": true
+    },
+    {
+      "question": "show me hyyzo deal posting bot",
+      "correct_answer": "Here is the Hyyzo Deal Posting Bot! 🛍️\n\n![Deal Posting Bot](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/hyyzo%20deal%20posting%20bot.jpg)",
+      "added_by_team": true
     }
   ]
 }
