@@ -134,5 +134,17 @@
         "Set timer to avoid duplicate deals"
       ]
     }
+  ],
+  "learned_responses": [
+    {
+      "question": "show me the dashboard",
+      "correct_answer": "Here's what your Hyyzo Dashboard looks like! 📊\n\n![Dashboard](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Dashboard.png)",
+      "added_by_team": true
+    },
+    {
+      "question": "show me the profile page",
+      "correct_answer": "Here is how your Profile page appears! 👤\n\n![Profile](https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Profile.png)",
+      "added_by_team": true
+    }
   ]
 }
