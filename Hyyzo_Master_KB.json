@@ -54,6 +54,13 @@
         "Paste product link",
         "Click convert",
         "Get profit link instantly"
+      ],
+      "images": [
+        {
+          "type": "ui_screenshot",
+          "description": "Converter tool layout",
+          "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Converter.png"
+        }
       ]
     },
     {
@@ -76,6 +83,13 @@
         "Paste product link",
         "Get converted link instantly",
         "Supports bulk link conversion"
+      ],
+      "images": [
+        {
+          "type": "ui_screenshot",
+          "description": "Telegram Converter Bots list",
+          "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Bots.png"
+        }
       ]
     },
     {
@@ -103,6 +117,43 @@
         "Enable auto forwarding option",
         "Enter source channel ID",
         "Save settings"
+      ],
+      "images": [
+        {
+          "type": "ui_screenshot",
+          "description": "Connecting Telegram channel - Step 1",
+          "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Telegram%201.png"
+        },
+        {
+          "type": "ui_screenshot",
+          "description": "Connecting Telegram channel - Step 2",
+          "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Telegram%202.png"
+        },
+        {
+          "type": "bot_screenshot",
+          "description": "Hyyzo Deal Posting Bot",
+          "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/hyyzo%20deal%20posting%20bot.jpg"
+        },
+        {
+          "type": "ui_tutorial",
+          "description": "Getting Channel ID - Step 1",
+          "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Get%20Channel%20Id%201.jpg"
+        },
+        {
+          "type": "ui_tutorial",
+          "description": "Getting Channel ID - Step 2",
+          "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Get%20Channel%20Id%202.jpg"
+        },
+        {
+          "type": "ui_tutorial",
+          "description": "Getting Channel ID - Step 3",
+          "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Get%20Channel%20Id%203.jpg"
+        },
+        {
+          "type": "ui_screenshot",
+          "description": "Auto-forwarding setup",
+          "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Autoforwarding.png"
+        }
       ]
     },
     {
@@ -114,13 +165,27 @@
         "View all reports",
         "Apply filters",
         "Analyze performance data"
+      ],
+      "images": [
+        {
+          "type": "ui_screenshot",
+          "description": "Reports page overview",
+          "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Reports.png"
+        }
       ]
     },
     {
       "module": "replacer",
       "intent": "text_replacement",
       "url": "https://hyzify.in/replacer",
-      "description": "Replace specific text in Telegram deal posts."
+      "description": "Replace specific text in Telegram deal posts.",
+      "images": [
+        {
+          "type": "ui_screenshot",
+          "description": "Replacer tool interface",
+          "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Replacer.png"
+        }
+      ]
     },
     {
       "module": "settings",
@@ -132,6 +197,23 @@
         "Stop image forwarding",
         "Block specific text",
         "Set timer to avoid duplicate deals"
+      ],
+      "images": [
+        {
+          "type": "ui_screenshot",
+          "description": "Settings page section 1",
+          "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Settings%201.png"
+        },
+        {
+          "type": "ui_screenshot",
+          "description": "Settings page section 2",
+          "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Settings%202.png"
+        },
+        {
+          "type": "ui_screenshot",
+          "description": "Settings page section 3",
+          "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Settings%203.png"
+        }
       ]
     }
   ],
