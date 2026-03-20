@@ -13,9 +13,99 @@ st.set_page_config(page_title="Hyzify AI Assistant", page_icon="🚀", layout="c
 # Custom CSS for Hyzify branding
 st.markdown("""
 <style>
-    .stApp { background-color: #f8f9fa; }
-    .stChatMessage { border-radius: 15px; }
-    h1 { color: #6c5ce7; }
+    /* Reset Streamlit defaults */
+    header[data-testid="stHeader"] { display: none; }
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    
+    /* Background pattern like widget */
+    .stApp { background-color: #f4f7f6; }
+    
+    /* Container max-width to simulate a mobile widget */
+    div.block-container {
+        max-width: 480px;
+        padding-top: 1rem;
+        padding-bottom: 5rem;
+    }
+
+    /* Custom Header implemented via markdown */
+    .widget-header {
+        background: #e66912;
+        color: white;
+        padding: 20px;
+        border-radius: 20px 20px 0 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 10px rgba(230,105,18,0.2);
+        margin-top: -15px;
+    }
+    .widget-header-text { flex-grow: 1; }
+    .widget-header-text h3 {
+        margin: 0; font-size: 1.1rem; font-weight: 600; color: white !important;
+        padding-bottom: 5px;
+    }
+    .widget-header-text p {
+        margin: 0; font-size: 0.85rem; opacity: 0.9; display: flex; align-items: center; gap: 6px;
+    }
+    .status-dot {
+        width: 8px; height: 8px; background-color: #4CAF50; border-radius: 50%; display: inline-block;
+    }
+
+    /* Assistant Message Bubble */
+    div[data-testid="stChatMessage"]:not(:has([data-testid="chatAvatarIcon-user"])) {
+        background: transparent;
+    }
+    div[data-testid="stChatMessage"]:not(:has([data-testid="chatAvatarIcon-user"])) div[data-testid="stChatMessageContent"] {
+        background-color: white;
+        color: #333;
+        border-radius: 20px 20px 20px 5px;
+        padding: 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+        border: 1px solid #eaeaea;
+    }
+
+    /* User Message Bubble */
+    div[data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) {
+        flex-direction: row-reverse;
+        background: transparent;
+    }
+    div[data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) div[data-testid="stChatMessageContent"] {
+        background-color: #e66912;
+        color: white;
+        border-radius: 20px 20px 5px 20px;
+        padding: 15px;
+        box-shadow: 0 2px 10px rgba(230,105,18,0.2);
+    }
+    /* Hide Avatars to match sleek UI */
+    div[data-testid="chatAvatarIcon-user"], div[data-testid="chatAvatarIcon-assistant"] {
+        display: none !important;
+    }
+
+    /* Input Box */
+    div[data-testid="stChatInput"] {
+        border-radius: 30px !important;
+        border: 1px solid #ddd;
+        box-shadow: 0 -5px 15px rgba(0,0,0,0.03);
+        padding: 5px 10px;
+        background-color: white;
+    }
+    div[data-testid="stChatInputFocus"] {
+        border-color: #e66912 !important;
+    }
+    
+    /* Send Button */
+    button[data-testid="stChatInputSubmitButton"] {
+        background-color: #e66912 !important;
+        border-radius: 50% !important;
+        height: 38px !important; width: 38px !important;
+        display: flex; justify-content: center; align-items: center; padding: 0 !important;
+    }
+    button[data-testid="stChatInputSubmitButton"] svg { fill: white !important; }
+
+    /* Hide redundant elements */
+    .stFeedback { padding-top: 5px; opacity: 0.8; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -56,8 +146,18 @@ def sync_history():
 # Initialize Groq Client
 api_key = os.getenv("GROQ_API_KEY")
 
-st.title("🚀 Hyzify AI Support")
-st.caption("On-point, friendly help for the Hyzify community.")
+# Custom HTML Header instead of standard title
+st.markdown("""
+<div class="widget-header">
+    <div style="font-size: 35px; line-height: 1; padding: 5px; background: rgba(255,255,255,0.2); border-radius: 50%;">🚀</div>
+    <div class="widget-header-text">
+        <h3>Chat with Hyzify</h3>
+        <p><span class="status-dot"></span> We're online</p>
+    </div>
+    <div style="font-size: 24px; cursor: pointer; opacity: 0.8;">⋮</div>
+    <div style="font-size: 22px; cursor: pointer; opacity: 0.8;">⌄</div>
+</div>
+""", unsafe_allow_html=True)
 
 if not api_key:
     st.error("Missing GROQ_API_KEY. Please add it to your .env file. Get a free key at https://console.groq.com/")
