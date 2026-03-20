@@ -8,9 +8,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Page configuration
-st.set_page_config(page_title="Hyyzo AI Assistant", page_icon="🚀", layout="centered")
+st.set_page_config(page_title="Hyzify AI Assistant", page_icon="🚀", layout="centered")
 
-# Custom CSS for Hyyzo branding
+# Custom CSS for Hyzify branding
 st.markdown("""
 <style>
     .stApp { background-color: #f8f9fa; }
@@ -21,7 +21,7 @@ st.markdown("""
 
 def load_kb():
     try:
-        with open("Hyyzo_Master_KB.json", "r", encoding="utf-8") as f:
+        with open("Hyzify_Master_KB.json", "r", encoding="utf-8") as f:
             return json.load(f)
     except Exception:
         return None
@@ -56,8 +56,8 @@ def sync_history():
 # Initialize Groq Client
 api_key = os.getenv("GROQ_API_KEY")
 
-st.title("🚀 Hyyzo AI Support")
-st.caption("On-point, friendly help for the Hyyzo community.")
+st.title("🚀 Hyzify AI Support")
+st.caption("On-point, friendly help for the Hyzify community.")
 
 if not api_key:
     st.error("Missing GROQ_API_KEY. Please add it to your .env file. Get a free key at https://console.groq.com/")
@@ -70,7 +70,7 @@ if not kb_data:
 
 # Prepare System Instruction
 kb_string = json.dumps(kb_data, indent=2)
-system_prompt = f"""You are a friendly, on-point support assistant for Hyyzo. 
+system_prompt = f"""You are a friendly, on-point support assistant for Hyzify. 
 Your goal is to help team members with quick, human-friendly answers.
 
 ### KNOWLEDGE BASE:
@@ -84,12 +84,12 @@ Your goal is to help team members with quick, human-friendly answers.
 
 ### FEW-SHOT EXAMPLES (HOW TO NARRATE):
 User: "How to change number?"
-❌ BAD (Robotic): "Email support@hyyzo.com with old and new number."
-✅ GOOD (Human): "Hey! It's easy to change your number. Just drop an email to support@hyyzo.com from your registered ID, and make sure to include both your old and new numbers. 🚀"
+❌ BAD (Robotic): "Email support@hyzify.in with old and new number."
+✅ GOOD (Human): "Hey! It's easy to change your number. Just drop an email to support@hyzify.in from your registered ID, and make sure to include both your old and new numbers. 🚀"
 
 User: "conversion of diamonds?"
 ❌ BAD (Robotic): "1 Diamond = 1 INR."
-✅ GOOD (Human): "On Hyyzo, Diamonds are basically real money! 💎 1 Diamond equals ₹1, so you can track your earnings easily. 👋"
+✅ GOOD (Human): "On Hyzify, Diamonds are basically real money! 💎 1 Diamond equals ₹1, so you can track your earnings easily. 👋"
 
 ### INSTRUCTIONS:
 1. NARRATE: Always frame your answer as a friendly chat response.
@@ -140,7 +140,7 @@ for i, message in enumerate(st.session_state.messages):
                                 "correct_answer": corrected_answer,
                                 "added_by_team": True
                             })
-                            with open("Hyyzo_Master_KB.json", "w", encoding="utf-8") as f:
+                            with open("Hyzify_Master_KB.json", "w", encoding="utf-8") as f:
                                 json.dump(kb_data, f, indent=2)
                             st.success("✅ Saved! The bot will use this answer next time.")
                             st.session_state.messages[i]["feedback"] = 2
