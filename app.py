@@ -130,9 +130,33 @@ def load_chat_history():
 
 def save_chat_history(messages):
     try:
-        clean_messages = [{"role": m["role"], "content": m["content"]} for m in messages]
+        seen_questions = set()
+        deduped_messages = []
+        skip_next_assistant = False
+        
+        for msg in messages:
+            if msg["role"] == "user":
+                q = msg["content"].strip().lower()
+                if q in seen_questions:
+                    skip_next_assistant = True
+                else:
+                    seen_questions.add(q)
+                    skip_next_assistant = False
+                    deduped_messages.append({"role": msg["role"], "content": msg["content"]})
+            elif msg["role"] == "assistant":
+                if not skip_next_assistant:
+                    deduped_messages.append({"role": msg["role"], "content": msg["content"]})
+        
+        # Prevent unlimited growth by capping the saved history (e.g. max 50 recent messages)
+        MAX_HISTORY = 50
+        if len(deduped_messages) > MAX_HISTORY:
+            deduped_messages = deduped_messages[-MAX_HISTORY:]
+            # Ensure the history always starts with a user prompt
+            if deduped_messages and deduped_messages[0]["role"] == "assistant":
+                deduped_messages = deduped_messages[1:]
+
         with open("chat_history.json", "w", encoding="utf-8") as f:
-            json.dump(clean_messages, f, indent=2)
+            json.dump(deduped_messages, f, indent=2)
     except Exception as e:
         print(f"Error saving history: {e}")
 
@@ -159,9 +183,23 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-if not api_key:
-    st.error("Missing GROQ_API_KEY. Please add it to your .env file. Get a free key at https://console.groq.com/")
+# Load all available API keys from environment
+api_keys = []
+for i in range(1, 10):
+    k = os.getenv(f"GROQ_API_KEY_{i}")
+    if k:
+        api_keys.append(k)
+
+# Fallback to standard key if no numbered keys exist
+if not api_keys and api_key:
+    api_keys.append(api_key)
+
+if not api_keys:
+    st.error("Missing GROQ_API_KEYs. Please add them to your .env file.")
     st.stop()
+
+if "api_key_index" not in st.session_state:
+    st.session_state.api_key_index = 0
 
 kb_data = load_kb()
 if not kb_data:
@@ -201,11 +239,8 @@ User: "Who is Elon Musk?"
 3. CRITICAL - OVERRIDES & IMAGES: If the user's question matches a question in `learned_responses`, use that factual info but still frame it in YOUR own words. HOWEVER, if the `correct_answer` contains an image in Markdown format, you MUST include that EXACT markdown code in your final response somewhere. Never remove images.
 """
 
-@st.cache_resource
-def get_groq_client():
-    return Groq(api_key=api_key)
-
-client = get_groq_client()
+def get_groq_client(current_api_key):
+    return Groq(api_key=current_api_key)
 
 # Display visible chat history with inline feedback
 for i, message in enumerate(st.session_state.messages):
@@ -269,6 +304,11 @@ if prompt := st.chat_input("How can I help you today?"):
     for m in st.session_state.messages[:-1]:
         groq_messages.append({"role": m["role"], "content": m["content"]})
     groq_messages.append({"role": "user", "content": prompt})
+
+    # Rotate API keys round-robin
+    current_key_val = api_keys[st.session_state.api_key_index]
+    client = get_groq_client(current_key_val)
+    st.session_state.api_key_index = (st.session_state.api_key_index + 1) % len(api_keys)
 
     # Generate response with streaming
     with st.chat_message("assistant"):
