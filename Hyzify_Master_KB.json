@@ -1,12 +1,19 @@
 {
   "kb_name": "Hyzify Knowledge Base",
-  "version": "2.0",
+  "version": "3.0",
   "platform_info": {
-    "description": "Hyzify is an advanced earning and automation platform integrated with Hyyzo that enables users to increase earnings via link conversion, automation, and Telegram deal sharing.",
+    "name": "Hyzify",
+    "description": "Hyzify is an advanced earning and automation platform designed to enhance user earnings through smart tools, link conversion, and automated deal sharing.",
+    "integration": "Directly integrated with Hyyzo for tracking and withdrawals"
+  },
+  "account_setup": {
     "login": "Users must log in using Hyyzo credentials",
-    "requirements": [
-      "Profile completion required",
-      "Profile verification mandatory for withdrawals"
+    "first_time_steps": [
+      "Complete profile",
+      "Add required details (tags etc.)"
+    ],
+    "important_rules": [
+      "Profile verification is mandatory for withdrawals"
     ]
   },
   "modules": [
@@ -14,17 +21,15 @@
       "module": "dashboard",
       "intent": "dashboard_info",
       "url": "https://hyzify.in/",
-      "description": "Dashboard shows overall user performance and activity.",
+      "description": "Dashboard shows overall performance summary.",
       "data_points": [
-        "Number of links converted",
-        "Total channels added",
+        "Total links converted",
+        "Total Telegram channels added",
         "Total earnings",
-        "Help video available"
+        "Help/guide video"
       ],
       "images": [
         {
-          "type": "ui_screenshot",
-          "description": "Dashboard screen",
           "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Dashboard.png"
         }
       ]
@@ -33,21 +38,17 @@
       "module": "profile",
       "intent": "profile_setup",
       "url": "https://hyzify.in/profile",
-      "description": "Manage affiliate tags and account setup.",
+      "description": "Manage affiliate tags and profile details.",
       "features": [
-        "Add Amazon affiliate tag",
-        "Request Flipkart and Shopsy tag via support"
+        "Add Amazon tag",
+        "Request Flipkart & Shopsy tags via support"
       ],
-      "important_rules": [
-        "Profile verification required for withdrawals"
+      "support": "+91 91165 72332",
+      "important": [
+        "Profile verification required for withdrawal"
       ],
-      "support_contact": {
-        "whatsapp": "+91 91165 72332"
-      },
       "images": [
         {
-          "type": "ui_screenshot",
-          "description": "Profile page",
           "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Profile.png"
         }
       ]
@@ -57,25 +58,23 @@
       "intent": "link_conversion",
       "url": "https://hyzify.in/converter",
       "description": "Convert product links into profit links.",
-      "capabilities": [
-        "Convert active store links",
-        "Acts as link shortener",
-        "Supports only partner stores"
+      "details": [
+        "Also works as link shortener",
+        "Only works for active partner stores"
       ],
+      "use_case": "Paste link → Convert → Share → Earn",
       "workflow": [
-        "Paste product link",
+        "Paste link",
         "Click convert",
-        "Get profit link instantly"
+        "Get profit link"
       ],
-      "failure_reasons": [
-        "Store not supported",
+      "failure_cases": [
+        "Unsupported store",
         "Invalid link",
-        "Try single link instead of bulk"
+        "Bulk issues → try single link"
       ],
       "images": [
         {
-          "type": "ui_screenshot",
-          "description": "Converter tool",
           "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Converter.png"
         }
       ]
@@ -98,29 +97,27 @@
         "Search bot",
         "Login using registered number",
         "Paste link",
-        "Get converted link instantly"
+        "Get converted link"
       ],
       "features": [
-        "Bulk link conversion supported"
+        "Bulk conversion supported"
       ],
       "images": [
         {
-          "type": "ui_screenshot",
-          "description": "Bots list",
           "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Bots.png"
         }
       ]
     },
     {
-      "module": "telegram_integration",
+      "module": "telegram",
       "intent": "telegram_setup",
       "url": "https://hyzify.in/telegram",
-      "description": "Setup Telegram channel for automation.",
+      "description": "Setup Telegram automation and deal posting.",
       "setup_steps": [
         "Click Add Telegram",
         "Add channel/group",
         "Make @hyyzo_deal_posting_bot admin",
-        "Enter username or channel ID",
+        "Enter username (@...) or ID (-100...)",
         "Select converter bot",
         "Save"
       ],
@@ -129,23 +126,25 @@
         "Forward message",
         "Copy channel ID"
       ],
+      "links": {
+        "deal_bot": "https://t.me/hyyzo_deal_posting_bot",
+        "chat_info_bot": "https://t.me/MyChatInfoBot"
+      },
       "auto_forwarding": [
-        "Enable auto forwarding",
-        "Enter source channel ID",
+        "Turn ON auto forwarding",
+        "Enter channel ID",
         "Save"
       ],
-      "common_issues": [
+      "issues": [
         "Bot not admin",
         "Wrong channel ID",
         "Wrong bot selected"
       ],
       "images": [
         {
-          "type": "ui_screenshot",
           "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Telegram%201.png"
         },
         {
-          "type": "ui_screenshot",
           "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Telegram%202.png"
         }
       ]
@@ -154,15 +153,14 @@
       "module": "reports",
       "intent": "reports_usage",
       "url": "https://hyzify.in/reports",
-      "description": "Track earnings and performance.",
+      "description": "Track earnings and order status.",
       "features": [
-        "Daily earnings tracking",
-        "Check approved/pending/cancelled",
+        "Track daily earnings",
+        "Check approved / pending / cancelled",
         "Apply filters"
       ],
       "images": [
         {
-          "type": "ui_screenshot",
           "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Reports.png"
         }
       ]
@@ -171,14 +169,13 @@
       "module": "replacer",
       "intent": "text_replacement",
       "url": "https://hyzify.in/replacer",
-      "description": "Replace text in Telegram deal posts.",
+      "description": "Replace text in Telegram deals.",
       "use_cases": [
         "Edit captions",
-        "Customize deal format"
+        "Customize deals"
       ],
       "images": [
         {
-          "type": "ui_screenshot",
           "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Replacer.png"
         }
       ]
@@ -189,28 +186,25 @@
       "url": "https://hyzify.in/settings",
       "description": "Manage automation settings.",
       "features": [
-        "Add/remove header & footer",
+        "Add/remove header/footer",
         "Stop image forwarding",
         "Block text",
         "Set timer to avoid duplicate deals"
       ],
       "images": [
         {
-          "type": "ui_screenshot",
           "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Settings%201.png"
         },
         {
-          "type": "ui_screenshot",
           "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Settings%202.png"
         },
         {
-          "type": "ui_screenshot",
           "path": "https://raw.githubusercontent.com/rajbhuwan1510/hyyzobot/main/images/Settings%203.png"
         }
       ]
     }
   ],
-  "withdrawal_process": {
+  "withdrawal": {
     "steps": [
       "Go to Dashboard",
       "Open Reports → My Earnings",
@@ -223,24 +217,51 @@
       "PAN required above ₹30,000"
     ],
     "notes": [
-      "Amount is transferred after approval"
+      "Amount transferred after approval"
     ]
   },
   "faqs": [
     {
-      "question": "Why is my link not converting?",
+      "category": "account",
+      "question": "Can I use separate login?",
+      "answer": "No, login with Hyyzo credentials only"
+    },
+    {
+      "category": "account",
+      "question": "Why profile verification required?",
+      "answer": "Ensures secure withdrawals and compliance"
+    },
+    {
+      "category": "conversion",
+      "question": "Why link not converting?",
       "answer": [
-        "Store not supported",
+        "Unsupported store",
         "Invalid link",
         "Try single link"
       ]
     },
     {
-      "question": "Where can I see my earnings?",
-      "answer": "Go to Reports → My Earnings"
+      "category": "conversion",
+      "question": "Can I convert multiple links?",
+      "answer": "Yes, using Telegram bots"
     },
     {
-      "question": "Why is auto forwarding not working?",
+      "category": "conversion",
+      "question": "What is profit link?",
+      "answer": "Tracking link that earns commission on purchases"
+    },
+    {
+      "category": "telegram",
+      "question": "Why Telegram not working?",
+      "answer": [
+        "Bot not admin",
+        "Wrong channel ID",
+        "Wrong bot selected"
+      ]
+    },
+    {
+      "category": "telegram",
+      "question": "Auto forwarding not working?",
       "answer": [
         "Check toggle ON",
         "Verify channel ID",
@@ -248,12 +269,46 @@
       ]
     },
     {
-      "question": "How to withdraw earnings?",
-      "answer": "Go to Reports → My Earnings → Redeem"
+      "category": "reports",
+      "question": "Where to see earnings?",
+      "answer": "Reports → My Earnings"
     },
     {
-      "question": "When will earnings be approved?",
-      "answer": "Usually 60–90 days depending on store"
+      "category": "reports",
+      "question": "How to check cancelled orders?",
+      "answer": "Use filters in reports"
+    },
+    {
+      "category": "withdrawal",
+      "question": "How to withdraw?",
+      "answer": "Reports → My Earnings → Redeem"
+    },
+    {
+      "category": "withdrawal",
+      "question": "Why withdrawal not processed?",
+      "answer": [
+        "Not approved",
+        "Profile not verified",
+        "Missing PAN"
+      ]
+    },
+    {
+      "category": "withdrawal",
+      "question": "When earnings approved?",
+      "answer": "Usually 60–90 days"
+    },
+    {
+      "category": "technical",
+      "question": "Bot not converting all links?",
+      "answer": "Try one-by-one or contact support"
+    },
+    {
+      "category": "technical",
+      "question": "Deals not posting?",
+      "answer": [
+        "Check auto-forwarding",
+        "Check bot permissions"
+      ]
     }
   ]
 }
