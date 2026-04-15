@@ -1,8 +1,10 @@
 import os
 import json
 import streamlit as st
+import time
 from groq import Groq
 from dotenv import load_dotenv
+from supabase import create_client, Client
 
 # Configuration & Setup
 load_dotenv()
@@ -299,105 +301,96 @@ st.markdown(css.replace("{logo_base64}", logo_base64), unsafe_allow_html=True)
 
 import time
 
-HISTORY_INDEX_FILE = "chat_history.json"
-CHATS_DIR = "chats"
-
-def get_chat_filepath(chat_id):
-    return os.path.join(CHATS_DIR, f"{chat_id}.json")
+# Supabase Setup
+url: str = os.getenv("SUPABASE_URL")
+key: str = os.getenv("SUPABASE_KEY")
+supabase: Client = create_client(url, key)
 
 def load_index():
-    if os.path.exists(HISTORY_INDEX_FILE):
-        try:
-            with open(HISTORY_INDEX_FILE, "r", encoding="utf-8") as f:
-                data = json.load(f)
-                if isinstance(data, dict) and "conversations" in data:
-                    # Check if messages are embedded and need to be moved to files
-                    os.makedirs(CHATS_DIR, exist_ok=True)
-                    for cid, cdata in data["conversations"].items():
-                        if "messages" in cdata:
-                            # Move messages to separate file if not already exists
-                            mpath = get_chat_filepath(cid)
-                            if not os.path.exists(mpath):
-                                with open(mpath, "w", encoding="utf-8") as f2:
-                                    json.dump(cdata["messages"], f2, indent=2)
-                            # Remove messages from index to keep it lightweight
-                            del cdata["messages"]
-                    return data
-                # Convert old list format to new index format
-                if isinstance(data, list):
-                    chat_id = f"chat_{int(time.time())}"
-                    title = data[0]["content"][:30] if data and data[0]["role"] == "user" else "Migrated Chat"
-                    new_index = {
-                        "active_chat_id": chat_id,
-                        "conversations": {
-                            chat_id: {"title": title, "id": chat_id}
-                        }
-                    }
-                    os.makedirs(CHATS_DIR, exist_ok=True)
-                    with open(get_chat_filepath(chat_id), "w", encoding="utf-8") as f2:
-                        json.dump(data, f2, indent=2)
-                    return new_index
-        except Exception as e:
-            print(f"Error loading index: {e}")
-    
-    return {"active_chat_id": None, "conversations": {}}
+    try:
+        # Fetch all conversations from Supabase
+        response = supabase.table("chat_histories").select("chat_id, index_data").execute()
+        convs = {}
+        for row in response.data:
+            convs[row["chat_id"]] = row["index_data"]
+        
+        # We'll use session state for active_chat_id, but the index is our map
+        return {"active_chat_id": None, "conversations": convs}
+    except Exception as e:
+        st.error(f"Error connecting to history database: {e}")
+        return {"active_chat_id": None, "conversations": {}}
 
 def save_index(index_data):
-    with open(HISTORY_INDEX_FILE, "w", encoding="utf-8") as f:
-        json.dump(index_data, f, indent=2)
+    # In this new architecture, save_index is called when a title changes.
+    # We'll update the specific row.
+    cid = st.session_state.chat_id
+    if cid and cid in index_data["conversations"]:
+        try:
+            supabase.table("chat_histories").update({
+                "index_data": index_data["conversations"][cid]
+            }).eq("chat_id", cid).execute()
+        except Exception as e:
+            print(f"Error saving index title: {e}")
 
 def load_chat_messages(chat_id):
-    path = get_chat_filepath(chat_id)
-    if os.path.exists(path):
-        try:
-            with open(path, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception as e:
-            print(f"Error loading messages: {e}")
+    try:
+        response = supabase.table("chat_histories").select("messages").eq("chat_id", chat_id).execute()
+        if response.data:
+            return response.data[0].get("messages", [])
+    except Exception as e:
+        print(f"Error loading messages: {e}")
     return []
 
 def save_chat_messages(chat_id, messages):
-    if not os.path.exists(CHATS_DIR):
-        os.makedirs(CHATS_DIR)
-    
-    # Simple deduplication and cleanup before saving
-    seen_questions = set()
-    deduped_messages = []
-    skip_next_assistant = False
-    
-    for msg in messages:
-        if msg["role"] == "user":
-            q = msg["content"].strip().lower()
-            if q in seen_questions:
-                skip_next_assistant = True
-            else:
-                seen_questions.add(q)
-                skip_next_assistant = False
-                deduped_messages.append({"role": msg["role"], "content": msg["content"]})
-        elif msg["role"] == "assistant":
-            if not skip_next_assistant:
-                deduped_messages.append({"role": msg["role"], "content": msg["content"]})
-    
-    # Prevent unlimited growth by capping the saved history (e.g. max 50 recent messages)
-    MAX_HISTORY = 50
-    if len(deduped_messages) > MAX_HISTORY:
-        deduped_messages = deduped_messages[-MAX_HISTORY:]
-        if deduped_messages and deduped_messages[0]["role"] == "assistant":
-            deduped_messages = deduped_messages[1:]
+    try:
+        # Simple deduplication (same logic as before)
+        seen_questions = set()
+        deduped_messages = []
+        skip_next_assistant = False
+        
+        for msg in messages:
+            if msg["role"] == "user":
+                q = msg["content"].strip().lower()
+                if q in seen_questions:
+                    skip_next_assistant = True
+                else:
+                    seen_questions.add(q)
+                    skip_next_assistant = False
+                    deduped_messages.append({"role": msg["role"], "content": msg["content"]})
+            elif msg["role"] == "assistant":
+                if not skip_next_assistant:
+                    deduped_messages.append({"role": msg["role"], "content": msg["content"]})
+        
+        MAX_HISTORY = 50
+        if len(deduped_messages) > MAX_HISTORY:
+            deduped_messages = deduped_messages[-MAX_HISTORY:]
+            if deduped_messages and deduped_messages[0]["role"] == "assistant":
+                deduped_messages = deduped_messages[1:]
 
-    with open(get_chat_filepath(chat_id), "w", encoding="utf-8") as f:
-        json.dump(deduped_messages, f, indent=2)
+        # Upsert the entire chat record
+        title = "New Chat"
+        if st.session_state.get("index") and chat_id in st.session_state.index["conversations"]:
+            title = st.session_state.index["conversations"][chat_id]["title"]
+
+        supabase.table("chat_histories").upsert({
+            "chat_id": chat_id,
+            "messages": deduped_messages,
+            "index_data": {"title": title, "id": chat_id}
+        }, on_conflict="chat_id").execute()
+    except Exception as e:
+        print(f"Error updating database: {e}")
 
 def sync_current_chat():
     if "chat_id" in st.session_state and st.session_state.chat_id:
-        save_chat_messages(st.session_state.chat_id, st.session_state.messages)
-        # Update title if it's still "New Chat" and we have a user message
+        # Update title if it's still "New Chat"
         if st.session_state.index["conversations"][st.session_state.chat_id]["title"] == "New Chat":
             for msg in st.session_state.messages:
                 if msg["role"] == "user":
-                    st.session_state.index["conversations"][st.session_state.chat_id]["title"] = msg["content"][:30] + "..."
-                    save_index(st.session_state.index)
+                    new_title = msg["content"][:30] + "..."
+                    st.session_state.index["conversations"][st.session_state.chat_id]["title"] = new_title
                     break
+        
+        save_chat_messages(st.session_state.chat_id, st.session_state.messages)
 
 # Helper to load KB
 def load_kb():
@@ -421,27 +414,23 @@ def start_new_chat():
     st.session_state.chat_id = new_id
     st.session_state.messages = []
     st.session_state.index["conversations"][new_id] = {"title": "New Chat", "id": new_id}
-    st.session_state.index["active_chat_id"] = new_id
-    save_index(st.session_state.index)
-    save_chat_messages(new_id, [])
+    # Note: save_chat_messages will be called when the first message is sent
 
 def switch_chat(chat_id):
     st.session_state.chat_id = chat_id
     st.session_state.messages = load_chat_messages(chat_id)
-    st.session_state.index["active_chat_id"] = chat_id
-    save_index(st.session_state.index)
 
 def delete_chat(chat_id):
     if chat_id in st.session_state.index["conversations"]:
+        try:
+            supabase.table("chat_histories").delete().eq("chat_id", chat_id).execute()
+        except Exception as e:
+            print(f"Error deleting chat: {e}")
+            
         del st.session_state.index["conversations"][chat_id]
-        path = get_chat_filepath(chat_id)
-        if os.path.exists(path):
-            os.remove(path)
         if st.session_state.chat_id == chat_id:
             st.session_state.chat_id = None
             st.session_state.messages = []
-            st.session_state.index["active_chat_id"] = None
-        save_index(st.session_state.index)
 
 # Initialize Groq Client
 api_key = os.getenv("GROQ_API_KEY")
