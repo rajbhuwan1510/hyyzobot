@@ -15,7 +15,7 @@ def get_base64_image(image_path):
     except Exception:
         return ""
 
-logo_path = r"C:\Users\Flipshope\Desktop\bot\images\logoHyyzo1.png"
+logo_path = os.path.join("images", "logoHyyzo1.png")
 logo_base64 = get_base64_image(logo_path)
 
 # Custom High-Fidelity CSS
@@ -639,7 +639,7 @@ if prompt := st.chat_input("How can I help you today?"):
                 model="llama-3.3-70b-versatile",
                 messages=groq_messages,
                 stream=True,
-                temperature=0.8,
+                temperature=0.2,
                 max_tokens=1024,
             )
 
